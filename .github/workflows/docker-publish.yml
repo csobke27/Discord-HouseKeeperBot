@@ -4,12 +4,17 @@ on:
   push:
     branches: [ "main" ] # Change to "master" if that is your primary branch
 
+# Automatically cancel out-of-date builds to avoid rate limits
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write # Grants permission to create and publish packages to GHCR
+      packages: write
 
     steps:
       - name: Checkout Code
