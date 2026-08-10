@@ -7,11 +7,14 @@ import math
 from office_quotes import officeQuotes
 from throw import throwItems
 import random
-from discord_token import DiscordToken
+#from discord_token import DiscordToken
 from archipelago import Archi
 #from replit import db
 
-MY_GUILD = discord.Object(id=GuildId)
+
+Token = os.getenv('DISCORD_TOKEN')
+GUILD_ID = os.getenv('DISCORD_GUILD_ID')
+MY_GUILD = discord.Object(id=GUILD_ID)
 
 class MyClient(discord.Client):
     def __init__(self, *, intents: discord.Intents):
@@ -246,7 +249,7 @@ async def on_message(message):
     # Extract the level from the default MEE6 message
     level = int(message.content.split("level ")[1][:-1])
 
-    #check to see if the rank requires a new role or not (roles are awarded every 5 levels)
+    # Check to see if the rank requires a new role or not (roles are awarded every 5 levels)
     roles = []
     for role in message.guild.roles:
       if role.name == "live now":
@@ -271,4 +274,5 @@ async def on_message(message):
 
 
 # keep_alive()
-client.run(DiscordToken)
+client.run(Token)
+#client.run(DiscordToken)
